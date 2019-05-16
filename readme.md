@@ -1,3 +1,3 @@
 BOND
 
-Distribute lock microservice pattern, using Redis
+Distributed lock microservice pattern, using Redis
