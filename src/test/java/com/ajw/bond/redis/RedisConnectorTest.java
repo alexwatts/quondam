@@ -13,13 +13,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class RedisConnectorTest {
 
-    private RedisCluster cluster;
-    protected Set<String> redisSentinelHosts;
+    private Set<String> redisSentinelHosts;
 
     @Before
     public void setup() {
 
-        cluster = RedisCluster.builder().ephemeral().sentinelCount(3).quorumSize(2)
+        RedisCluster cluster = RedisCluster.builder().ephemeral().sentinelCount(3).quorumSize(2)
                 .replicationGroup("master", 1)
                 .build();
         cluster.start();
