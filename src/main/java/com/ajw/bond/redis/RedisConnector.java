@@ -24,7 +24,6 @@ public class RedisConnector {
     public RMap<String, Integer> putKey(String shard, String key) {
 
         RLock lock = redissonClient.getLock(key);
-
         try {
             lock.lock(10, TimeUnit.SECONDS);
 
@@ -42,7 +41,6 @@ public class RedisConnector {
         } catch (InterruptedException e) {
             lock.unlock();
         }
-
         throw new IllegalStateException(String.format("Lock was not acquired for shard:%s, key:%s", shard, key));
     }
 
@@ -62,7 +60,6 @@ public class RedisConnector {
                     } else {
                         return false;
                     }
-
                 } finally {
                     lock.unlock();
                 }

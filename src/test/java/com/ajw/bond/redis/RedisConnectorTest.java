@@ -29,11 +29,9 @@ public class RedisConnectorTest {
 
     @Test
     public void shouldBeAbleToConnectToRedis() {
-
         String REDIS_SENTINEL_URL = "redis://" + redisSentinelHosts.toArray()[0];
         RedisConnector redisConnector = new RedisConnector(REDIS_SENTINEL_URL);
         assertThat(redisConnector.isConnected(), equalTo(true));
-
     }
 
     @Test
@@ -62,4 +60,5 @@ public class RedisConnectorTest {
         Boolean removed = redisConnector.removeKey("shard", "key");
         assertThat(removed, equalTo(false));
     }
+
 }
