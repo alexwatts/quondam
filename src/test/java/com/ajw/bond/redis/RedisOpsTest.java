@@ -1,4 +1,4 @@
-package com.ajw.bond;
+package com.ajw.bond.redis;
 
 import org.junit.After;
 import org.junit.Before;
@@ -8,10 +8,8 @@ import org.redisson.api.RLock;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import redis.clients.jedis.JedisSentinelPool;
 import redis.embedded.RedisCluster;
 import redis.embedded.util.JedisUtil;
-
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -21,10 +19,8 @@ import static org.hamcrest.core.IsEqual.equalTo;
 
 public class RedisOpsTest {
 
-    protected JedisSentinelPool pool;
-
     private RedisCluster cluster;
-    protected Set<String> jedisSentinelHosts;
+    protected Set<String> redisSentinelHosts;
 
     private RedissonClient client;
 
@@ -36,22 +32,17 @@ public class RedisOpsTest {
                 .build();
         cluster.start();
 
-        jedisSentinelHosts = JedisUtil.sentinelHosts(cluster);
+        redisSentinelHosts = JedisUtil.sentinelHosts(cluster);
 
         Config config = new Config();
         config.useSentinelServers().setMasterName("master")
                 .addSentinelAddress(
-                        jedisSentinelHosts.stream().
+                        redisSentinelHosts.stream().
                                 map(s -> "redis://" + s).collect(Collectors.toList()).
-                                toArray(new String[jedisSentinelHosts.size()])
+                                toArray(new String[redisSentinelHosts.size()])
                 );
 
         client = Redisson.create(config);
-    }
-
-    @After
-    public void tearDown() {
-        cluster.stop();
     }
 
     @Test
@@ -85,18 +76,18 @@ public class RedisOpsTest {
     }
 
     @Test
-    public void testLockCannotBeAquiredByOtherThreadWhenLocked() throws InterruptedException {
+    public void testLockCannotBeAcquiredByOtherThreadWhenLocked() throws InterruptedException {
 
         RLock lock = client.getLock("lock");
         lock.lock(2, TimeUnit.SECONDS);
 
         Thread t = new Thread() {
             public void run() {
-                RLock lock1 = client.getLock("lock");
+                RLock sameLock = client.getLock("lock");
                 try {
-                    boolean locked = lock1.tryLock(1, 1, TimeUnit.MILLISECONDS);
+                    boolean locked = sameLock.tryLock(1, 1, TimeUnit.MILLISECONDS);
                     assertThat(locked, equalTo(false));
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
 
                 }
             }
@@ -108,7 +99,7 @@ public class RedisOpsTest {
     }
 
     @Test
-    public void testDifferentLockIsAquiredByOtherThread() throws InterruptedException {
+    public void testDifferentLockIsAcquiredByOtherThread() throws InterruptedException {
 
         RLock lock = client.getLock("lock");
         lock.lock(2, TimeUnit.SECONDS);
@@ -119,7 +110,7 @@ public class RedisOpsTest {
                 try {
                     boolean locked = differentLock.tryLock(1, 1, TimeUnit.MILLISECONDS);
                     assertThat(locked, equalTo(true));
-                } catch (InterruptedException e) {
+                } catch (InterruptedException ignored) {
 
                 }
             }
@@ -128,6 +119,11 @@ public class RedisOpsTest {
         t.start();
         t.join();
 
+    }
+
+    @After
+    public void tearDown() {
+        cluster.stop();
     }
 
 }
