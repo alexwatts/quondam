@@ -22,16 +22,14 @@ public class KeyController {
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/keys", method = RequestMethod.PUT)
     public IdempotenceKey putKey(@RequestBody IdempotenceKey idempotenceKey) {
-        RMap<String, Integer> shard = redisConnector.putKey(idempotenceKey.getShard(), idempotenceKey.getKey());
-        return new IdempotenceKey(idempotenceKey.getShard(), idempotenceKey.getKey());
+        return redisConnector.putKey(idempotenceKey.getShard(), idempotenceKey.getKey());
     }
 
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/keys", method = RequestMethod.DELETE)
     public IdempotenceKey removeKey(@RequestBody IdempotenceKey idempotenceKey) {
-        boolean removed = redisConnector.removeKey(idempotenceKey.getShard(), idempotenceKey.getKey());
-        return new IdempotenceKey(idempotenceKey.getShard(), idempotenceKey.getKey());
+        return redisConnector.removeKey(idempotenceKey.getShard(), idempotenceKey.getKey());
     }
 
 }

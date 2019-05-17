@@ -1,9 +1,9 @@
 package com.ajw.bond.redis;
 
+import com.ajw.bond.model.IdempotenceKey;
 import org.junit.Before;
 import org.junit.Test;
 import org.redisson.Redisson;
-import org.redisson.api.RMap;
 import org.redisson.config.Config;
 import redis.embedded.RedisCluster;
 import redis.embedded.util.JedisUtil;
@@ -12,6 +12,10 @@ import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.notNullValue;
+import static org.mockito.ArgumentMatchers.isNotNull;
+import static org.mockito.ArgumentMatchers.notNull;
 
 public class RedisConnectorTest {
 
@@ -45,8 +49,8 @@ public class RedisConnectorTest {
         config.useSentinelServers().setMasterName("master")
                 .addSentinelAddress(REDIS_SENTINEL_URL);
         RedisConnector redisConnector = new RedisConnector(Redisson.create(config));
-        RMap<String, Integer> map = redisConnector.putKey("shard", "key");
-        assertThat(map.containsKey("1"), equalTo(false));
+        IdempotenceKey key = redisConnector.putKey("shard", "key");
+        assertThat(key, is(notNullValue()));
     }
 
     @Test
@@ -59,8 +63,8 @@ public class RedisConnectorTest {
 
         redisConnector.putKey("shard", "key");
 
-        Boolean removed = redisConnector.removeKey("shard", "key");
-        assertThat(removed, equalTo(true));
+        IdempotenceKey key = redisConnector.removeKey("shard", "key");
+        assertThat(key, is(notNullValue()));
     }
 
     @Test
@@ -70,8 +74,8 @@ public class RedisConnectorTest {
         config.useSentinelServers().setMasterName("master")
                 .addSentinelAddress(REDIS_SENTINEL_URL);
         RedisConnector redisConnector = new RedisConnector(Redisson.create(config));
-        Boolean removed = redisConnector.removeKey("shard", "key");
-        assertThat(removed, equalTo(false));
+        IdempotenceKey key = redisConnector.removeKey("shard", "key");
+        assertThat(key, is(notNullValue()));
     }
 
 }

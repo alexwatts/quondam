@@ -1,10 +1,12 @@
 package com.ajw.bond.redis;
 
+import com.ajw.bond.model.IdempotenceKey;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -16,7 +18,7 @@ public class RedisConnector {
         this.redissonClient = redissonClient;
     }
 
-    public RMap<String, Integer> putKey(String shard, String key) {
+    public IdempotenceKey putKey(String shard, String key) {
 
         RLock lock = redissonClient.getLock(key);
         try {
@@ -28,7 +30,7 @@ public class RedisConnector {
                 try {
                     RMap<String, Integer> map = redissonClient.getMap(shard);
                     map.put(key, 1);
-                    return map;
+                    return new IdempotenceKey(shard, key);
                 } finally {
                     lock.unlock();
                 }
@@ -39,7 +41,7 @@ public class RedisConnector {
         throw new IllegalStateException(String.format("Lock was not acquired for shard:%s, key:%s", shard, key));
     }
 
-    public boolean removeKey(String shard, String key) {
+    public IdempotenceKey removeKey(String shard, String key) {
         RLock lock = redissonClient.getLock(key);
 
         try {
@@ -51,9 +53,9 @@ public class RedisConnector {
                     RMap<String, Integer> map = redissonClient.getMap(shard);
                     if (map.containsKey(key)) {
                         map.remove(key);
-                        return true;
+                        return new IdempotenceKey(shard, key);
                     } else {
-                        return false;
+                        return new IdempotenceKey(shard, key);
                     }
                 } finally {
                     lock.unlock();
@@ -61,9 +63,9 @@ public class RedisConnector {
             }
         } catch (InterruptedException ignored) {
             lock.unlock();
-            return false;
+            return new IdempotenceKey(shard, key);
         }
-       return false;
+       return new IdempotenceKey(shard, key);
     }
 
     public Boolean isConnected() {
