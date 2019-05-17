@@ -2,7 +2,9 @@ package com.ajw.bond.redis;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.redisson.Redisson;
 import org.redisson.api.RMap;
+import org.redisson.config.Config;
 import redis.embedded.RedisCluster;
 import redis.embedded.util.JedisUtil;
 
@@ -29,14 +31,20 @@ public class RedisConnectorTest {
     @Test
     public void shouldBeAbleToConnectToRedis() {
         String REDIS_SENTINEL_URL = "redis://" + redisSentinelHosts.toArray()[0];
-        RedisConnector redisConnector = new RedisConnector(REDIS_SENTINEL_URL);
+        Config config = new Config();
+        config.useSentinelServers().setMasterName("master")
+                .addSentinelAddress(REDIS_SENTINEL_URL);
+        RedisConnector redisConnector = new RedisConnector(Redisson.create(config));
         assertThat(redisConnector.isConnected(), equalTo(true));
     }
 
     @Test
     public void shouldBeAbleToPutKey() {
         String REDIS_SENTINEL_URL = "redis://" + redisSentinelHosts.toArray()[0];
-        RedisConnector redisConnector = new RedisConnector(REDIS_SENTINEL_URL);
+        Config config = new Config();
+        config.useSentinelServers().setMasterName("master")
+                .addSentinelAddress(REDIS_SENTINEL_URL);
+        RedisConnector redisConnector = new RedisConnector(Redisson.create(config));
         RMap<String, Integer> map = redisConnector.putKey("shard", "key");
         assertThat(map.containsKey("1"), equalTo(false));
     }
@@ -44,7 +52,10 @@ public class RedisConnectorTest {
     @Test
     public void shouldBeAbleToRemoveExistingKey() {
         String REDIS_SENTINEL_URL = "redis://" + redisSentinelHosts.toArray()[0];
-        RedisConnector redisConnector = new RedisConnector(REDIS_SENTINEL_URL);
+        Config config = new Config();
+        config.useSentinelServers().setMasterName("master")
+                .addSentinelAddress(REDIS_SENTINEL_URL);
+        RedisConnector redisConnector = new RedisConnector(Redisson.create(config));
 
         redisConnector.putKey("shard", "key");
 
@@ -55,7 +66,10 @@ public class RedisConnectorTest {
     @Test
     public void shouldBeAbleToRemoveNonExistentKey() {
         String REDIS_SENTINEL_URL = "redis://" + redisSentinelHosts.toArray()[0];
-        RedisConnector redisConnector = new RedisConnector(REDIS_SENTINEL_URL);
+        Config config = new Config();
+        config.useSentinelServers().setMasterName("master")
+                .addSentinelAddress(REDIS_SENTINEL_URL);
+        RedisConnector redisConnector = new RedisConnector(Redisson.create(config));
         Boolean removed = redisConnector.removeKey("shard", "key");
         assertThat(removed, equalTo(false));
     }

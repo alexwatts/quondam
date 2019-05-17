@@ -1,24 +1,19 @@
 package com.ajw.bond.redis;
 
-import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
+@Component
 public class RedisConnector {
 
     private final RedissonClient redissonClient;
 
-    public RedisConnector(String sentinelAddress) {
-
-        Config config = new Config();
-        config.useSentinelServers().setMasterName("master")
-                .addSentinelAddress(sentinelAddress);
-
-        redissonClient = Redisson.create(config);
+    public RedisConnector(RedissonClient redissonClient) {
+        this.redissonClient = redissonClient;
     }
 
     public RMap<String, Integer> putKey(String shard, String key) {

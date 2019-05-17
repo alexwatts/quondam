@@ -1,31 +1,23 @@
 package com.ajw.bond;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import org.springframework.test.context.junit4.SpringRunner;
 import redis.embedded.RedisCluster;
 import redis.embedded.util.JedisUtil;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class ApplicationTest {
-
-    @Test
-    public void contextLoads() throws Exception {
-    }
+@Configuration
+public class TestConfiguration {
 
     @Bean
     @Primary
-    public RedissonClient redissonClient() {
+    public RedissonClient redissonTestClient() {
 
         Set<String> redisSentinelHosts;
 
@@ -47,5 +39,4 @@ public class ApplicationTest {
         return Redisson.create(config);
 
     }
-
 }
