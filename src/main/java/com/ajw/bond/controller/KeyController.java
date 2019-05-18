@@ -26,7 +26,7 @@ public class KeyController {
     }
 
     @ResponseBody
-    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseStatus(HttpStatus.OK)
     @RequestMapping(value = "/keys", method = RequestMethod.DELETE)
     public IdempotenceKey removeKey(@RequestBody IdempotenceKey idempotenceKey) {
         return redisConnector.removeKey(idempotenceKey.getShard(), idempotenceKey.getKey());

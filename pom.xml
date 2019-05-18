@@ -24,6 +24,12 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                <environmentVariables>
+                    <REDIS_SENTINEL_SERVICE_HOST>10.0.0.1</REDIS_SENTINEL_SERVICE_HOST>
+                    <REDIS_SENTINEL_SERVICE_PORT>26739</REDIS_SENTINEL_SERVICE_PORT>
+                </environmentVariables>
+            </configuration>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>

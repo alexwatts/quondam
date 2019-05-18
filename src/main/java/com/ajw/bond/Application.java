@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Profile;
 @SpringBootApplication
 public class Application {
 
-    @Value(value = "${redisSentinelUrl}")
+    @Value(value = "redis://${REDIS_SENTINEL_SERVICE_HOST:10.0.0.1}:${REDIS_SENTINEL_SERVICE_PORT:26739}")
     public String sentinelAddress;
 
     public static void main(String[] args) {
@@ -24,7 +24,7 @@ public class Application {
     public RedissonClient redissonClient() {
 
         Config config = new Config();
-        config.useSentinelServers().setMasterName("master")
+        config.useSentinelServers().setMasterName("mymaster")
                 .addSentinelAddress(sentinelAddress);
 
         return Redisson.create(config);

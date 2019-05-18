@@ -66,7 +66,7 @@ public class KeyControllerIntegrationTest {
         ResponseEntity<IdempotenceKey> response = restTemplate.exchange("/keys", HttpMethod.DELETE, entity, IdempotenceKey.class);
 
         // then
-        assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
+        assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
     }
 
 }

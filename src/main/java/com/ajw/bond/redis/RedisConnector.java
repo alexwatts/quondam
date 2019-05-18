@@ -6,7 +6,6 @@ import org.redisson.api.RMap;
 import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 @Component
@@ -19,7 +18,6 @@ public class RedisConnector {
     }
 
     public IdempotenceKey putKey(String shard, String key) {
-
         RLock lock = redissonClient.getLock(key);
         try {
             lock.lock(10, TimeUnit.SECONDS);
@@ -43,7 +41,6 @@ public class RedisConnector {
 
     public IdempotenceKey removeKey(String shard, String key) {
         RLock lock = redissonClient.getLock(key);
-
         try {
             lock.lock(10, TimeUnit.SECONDS);
             // Wait for 100 seconds and automatically unlock it after 10 seconds
@@ -65,7 +62,7 @@ public class RedisConnector {
             lock.unlock();
             return new IdempotenceKey(shard, key);
         }
-       return new IdempotenceKey(shard, key);
+        return new IdempotenceKey(shard, key);
     }
 
     public Boolean isConnected() {
