@@ -35,7 +35,12 @@ public class RedisConnector {
             }
         } catch (InterruptedException e) {
             lock.unlock();
+        } finally {
+            if (lock != null && lock.isLocked()) {
+                lock.unlock();
+            }
         }
+
         throw new IllegalStateException(String.format("Lock was not acquired for shard:%s, key:%s", shard, key));
     }
 
@@ -61,6 +66,10 @@ public class RedisConnector {
         } catch (InterruptedException ignored) {
             lock.unlock();
             return new IdempotenceKey(shard, key);
+        } finally {
+            if (lock != null && lock.isLocked()) {
+                lock.unlock();
+            }
         }
         return new IdempotenceKey(shard, key);
     }
