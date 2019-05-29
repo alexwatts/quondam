@@ -33,7 +33,7 @@ public class KeyControllerIntegrationTest {
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private final IdempotenceKey idempotenceKey = new IdempotenceKey("testShard", "testKey");
+    private final IdempotenceKey idempotenceKey = new IdempotenceKey("testShard", "testKey", Boolean.FALSE);
 
     @Test
     public void canAddKey() throws JsonProcessingException {

@@ -2,7 +2,6 @@ package com.ajw.bond.controller;
 
 import com.ajw.bond.model.IdempotenceKey;
 import com.ajw.bond.redis.RedisConnector;
-import org.redisson.api.RMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -28,7 +28,7 @@ public class RedisConnector {
                 try {
                     RMap<String, Integer> map = redissonClient.getMap(shard);
                     map.put(key, 1);
-                    return new IdempotenceKey(shard, key);
+                    return new IdempotenceKey(shard, key, Boolean.FALSE);
                 } finally {
                     lock.unlock();
                 }
@@ -55,9 +55,9 @@ public class RedisConnector {
                     RMap<String, Integer> map = redissonClient.getMap(shard);
                     if (map.containsKey(key)) {
                         map.remove(key);
-                        return new IdempotenceKey(shard, key);
+                        return new IdempotenceKey(shard, key, Boolean.TRUE);
                     } else {
-                        return new IdempotenceKey(shard, key);
+                        return new IdempotenceKey(shard, key, Boolean.FALSE);
                     }
                 } finally {
                     lock.unlock();
@@ -65,13 +65,13 @@ public class RedisConnector {
             }
         } catch (InterruptedException ignored) {
             lock.unlock();
-            return new IdempotenceKey(shard, key);
+            return new IdempotenceKey(shard, key, Boolean.FALSE);
         } finally {
             if (lock != null && lock.isLocked()) {
                 lock.unlock();
             }
         }
-        return new IdempotenceKey(shard, key);
+        return new IdempotenceKey(shard, key, Boolean.FALSE);
     }
 
     public Boolean isConnected() {
