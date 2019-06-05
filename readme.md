@@ -203,10 +203,10 @@ urls {
 }  
 ```
 
-run the NFT's
+run the quondam NFT's
 
 ```
-mvn gatling:test
+run-nft.sh
 ```
 
 The NFTs will do some setup, 'creating keys' etc, but after they get going you will see some repeating output like this. The global request count should always be increasing...
