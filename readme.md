@@ -88,11 +88,48 @@ redis-msxwc                     1/1     Running   0          2m49s
 redis-nzfxs                     1/1     Running   0          2m49s
 redis-sentinel-rj2n9            1/1     Running   0          2m49s
 redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-sentinel-kv6io            1/1     Running   0          2m49s
 redis-v9r5r                     1/1     Running   0          2m50s
 ```
 
+To create the quondom REST API,
 
+```
+create-quondom.sh
+```
 
+You should see quondam added to the list of running pods
+
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+quondam-web-64fcf46bd9-skfvv    1/1     Running   0          2m49s
+redis-msxwc                     1/1     Running   0          2m49s
+redis-nzfxs                     1/1     Running   0          2m49s
+redis-sentinel-rj2n9            1/1     Running   0          2m49s
+redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-sentinel-kv6io            1/1     Running   0          2m49s
+redis-v9r5r                     1/1     Running   0          2m50s
+```
+
+To create the payments API, 
+
+```
+create-payments.sh
+```
+
+You should see the payments added to the list of running pods
+
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+quondam-web-64fcf46bd9-skfvv    1/1     Running   0          2m49s
+payments-web-8467f5b867-4jz74   1/1     Running   0          2m49s
+redis-msxwc                     1/1     Running   0          2m49s
+redis-nzfxs                     1/1     Running   0          2m49s
+redis-sentinel-rj2n9            1/1     Running   0          2m49s
+redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-sentinel-kv6io            1/1     Running   0          2m49s
+redis-v9r5r                     1/1     Running   0          2m50s
+```
 
 ## Running the tests
 
