@@ -69,7 +69,7 @@ class HASimulation extends Simulation {
   val chaosScn = scenario("Chaos").
     during(duration) {
       exec(session => {
-        val scriptOutput = Process("./chaos.sh").!!
+        val scriptOutput = Process("./bond-perf-tests/chaos.sh").!!
         println(s"""Chaos invoked: ${scriptOutput} """)
         session
       }).pause(1 minute)
