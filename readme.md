@@ -147,8 +147,7 @@ in a second terminal window, you can run
 eval $(minikube docker-env)
 watch kubectl get pods
 ```
-
-you'll see the list of runnind pods, but refreshed at intervals
+to get the status of all running pods
 
 ```
 Every 2.0s: kubectl get pods                         I: Wed Jun  5 21:51:49 2019
