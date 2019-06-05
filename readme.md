@@ -1,6 +1,6 @@
 # Quondam
 
-Quondam is a HA microservice that trys to help with making parts of a business flow happen 'only once' in infrastructural environments where 'at least once' is the default modus operandi.
+Quondam is a HA microservice that trys to help with making parts of a business flow happen 'only once' in environments where 'at least once' is an implication of the technical infrastructure (when event sourcing with queues).
 
 It's built on top of Redis, Docker and Kubernetes. The REST protocol is serviced by a Spring Boot microservice using Spring MVC.
 
@@ -13,24 +13,31 @@ These instructions will explain how to build Quondam locally, deploy to a local 
 ### Prerequisites
 
 Minikube.
-Kubectla.
+Kubectl.
 Maven.
 Docker.
 Java.
 
-
 ```
-Give examples
+You can follow the links in each pre-requisite to see how to install these on MAC OS 10 Mojave
 ```
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
+The project root contains 4 folders
 
-Say what the step will be
+quondam/
+quondam-nft/
+payments
+redis
+
+quondam and payments are spring boot microservices, quondam-nft is a gatling project for load testing
+
+you can build all three of these by running the maven build from the root directory
+
 
 ```
-Give the example
+mvn clean install
 ```
 
 And repeat
