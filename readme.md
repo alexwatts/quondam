@@ -1,6 +1,6 @@
 # Quondam
 
-Quondam is a HA microservice that trys to help with making parts of a business flow happen 'only once' in infrastructural environments where 'at least once' is the default modus operandi.
+Quondam is a HA microservice that trys to help with making parts of a business flow happen 'only once' in environments where 'at least once' is an implication of the technical infrastructure (when event sourcing with queues).
 
 It's built on top of Redis, Docker and Kubernetes. The REST protocol is serviced by a Spring Boot microservice using Spring MVC.
 
@@ -13,33 +13,123 @@ These instructions will explain how to build Quondam locally, deploy to a local 
 ### Prerequisites
 
 Minikube.
-Kubectla.
+Kubectl.
 Maven.
 Docker.
 Java.
 
-
-```
-Give examples
-```
+You can follow the links in each pre-requisite to see how to install these on MAC OS 10 Mojave
 
 ### Installing
 
-A step by step series of examples that tell you how to get a development env running
-
-Say what the step will be
+To build quondam, quondam-nft and payments you need minikube to be running. (what am i building?)
 
 ```
-Give the example
+ eval $(minikube docker-env)
+ mvn clean install
 ```
 
-And repeat
+You should see the following output:
 
 ```
-until finished
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] quondam ............................................ SUCCESS [ 45.352 s]
+[INFO] quondam-nft......................................... SUCCESS [  1.568 s]
+[INFO] payments ........................................... SUCCESS [ 17.262 s]
+[INFO] bond-parent ........................................ SUCCESS [  0.009 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+To build the redis image 
+
+```
+./build-redis-image.sh
+```
+
+You should see lines similar to this:
+
+```
+Successfully built e33e8d456e34
+Successfully tagged k8s.gcr.io/redis:v1
+```
+
+To create the redis cluster:
+
+```
+./create-redis-cluster.sh
+```
+
+you should see these lines:
+
+```
+pod/redis-master created
+service/redis-sentinel created
+replicationcontroller/redis-sentinel created
+replicationcontroller/redis created
+replicationcontroller/redis scaled
+replicationcontroller/redis-sentinel scaled
+```
+
+You should then be able to observe the redis cluster is up and running, with
+
+```
+kubectl get pods
+```
+
+and see these running pods (3 redis, 3 sentinels)
+
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-msxwc                     1/1     Running   0          2m49s
+redis-nzfxs                     1/1     Running   0          2m49s
+redis-sentinel-rj2n9            1/1     Running   0          2m49s
+redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-sentinel-kv6io            1/1     Running   0          2m49s
+redis-v9r5r                     1/1     Running   0          2m50s
+```
+
+To create the quondom REST API,
+
+```
+create-quondom.sh
+```
+
+You should see quondam added to the list of running pods
+
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+quondam-web-64fcf46bd9-skfvv    1/1     Running   0          2m49s
+redis-msxwc                     1/1     Running   0          2m49s
+redis-nzfxs                     1/1     Running   0          2m49s
+redis-sentinel-rj2n9            1/1     Running   0          2m49s
+redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-sentinel-kv6io            1/1     Running   0          2m49s
+redis-v9r5r                     1/1     Running   0          2m50s
+```
+
+To create the payments API, 
+
+```
+create-payments.sh
+```
+
+You should see the payments added to the list of running pods
+
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+quondam-web-64fcf46bd9-skfvv    1/1     Running   0          2m49s
+payments-web-8467f5b867-4jz74   1/1     Running   0          2m49s
+redis-msxwc                     1/1     Running   0          2m49s
+redis-nzfxs                     1/1     Running   0          2m49s
+redis-sentinel-rj2n9            1/1     Running   0          2m49s
+redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-sentinel-kv6io            1/1     Running   0          2m49s
+redis-v9r5r                     1/1     Running   0          2m50s
+```
 
 ## Running the tests
 
