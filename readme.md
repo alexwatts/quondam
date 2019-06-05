@@ -4,7 +4,9 @@ Quondam is a HA microservice that provides an interface for making things happen
 
 It's built on top of Redis, Docker and Kubernetes. The REST protocol is serviced by a Spring Boot microservice.
 
-The performance and resiliency tests are based on Gatling. Quondam is fast and highly available.
+The performance and resiliency tests are based on Gatling. 
+
+Quondam is fast and highly available.
 
 ## Getting Started
 
