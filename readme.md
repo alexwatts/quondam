@@ -97,7 +97,7 @@ redis-v9r5r                     1/1     Running   0          2m50s
 To create the quondom REST API,
 
 ```
-create-quondom.sh
+./create-quondom.sh
 ```
 
 You should see quondam added to the list of running pods
@@ -116,7 +116,7 @@ redis-v9r5r                     1/1     Running   0          2m50s
 To create the payments API, 
 
 ```
-create-payments.sh
+./create-payments.sh
 ```
 
 You should see the payments added to the list of running pods
@@ -207,7 +207,7 @@ urls {
 run the quondam NFT's
 
 ```
-run-nft.sh
+./run-nft.sh
 ```
 
 The NFTs will do some setup, 'creating keys' etc, but after they get going you will see some repeating output like this. The global request count should always be increasing...
