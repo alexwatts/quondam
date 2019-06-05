@@ -18,32 +18,38 @@ Maven.
 Docker.
 Java.
 
-```
 You can follow the links in each pre-requisite to see how to install these on MAC OS 10 Mojave
-```
 
 ### Installing
 
-The project root contains 4 folders
+To build quondam, quondam-nft and payments you need minikube to be running. (what am i building?)
 
-quondam/
-quondam-nft/
-payments
-redis
-
-quondam and payments are spring boot microservices, quondam-nft is a gatling project for load testing
-
-you can build all three of these by running the maven build from the root directory
-
+```
+ eval $(minikube docker-env)
+```
 
 ```
 mvn clean install
 ```
 
-And repeat
+You should see the following output:
+
+[INFO] ------------------------------------------------------------------------
+[INFO] Reactor Summary:
+[INFO] 
+[INFO] quondam ............................................ SUCCESS [ 45.352 s]
+[INFO] quondam-nft......................................... SUCCESS [  1.568 s]
+[INFO] payments ........................................... SUCCESS [ 17.262 s]
+[INFO] bond-parent ........................................ SUCCESS [  0.009 s]
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+
+
+To build the redis image 
 
 ```
-until finished
+./build-redis-image.sh
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
