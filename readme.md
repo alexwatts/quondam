@@ -57,7 +57,42 @@ Successfully built e33e8d456e34
 Successfully tagged k8s.gcr.io/redis:v1
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
+To create the redis cluster:
+
+```
+./create-redis-cluster.sh
+```
+
+you should see these lines:
+
+```
+pod/redis-master created
+service/redis-sentinel created
+replicationcontroller/redis-sentinel created
+replicationcontroller/redis created
+replicationcontroller/redis scaled
+replicationcontroller/redis-sentinel scaled
+```
+
+You should then be able to observe the redis cluster is up and running, with
+
+```
+kubectl get pods
+```
+
+and see these running pods (3 redis, 3 sentinels)
+
+```
+NAME                            READY   STATUS    RESTARTS   AGE
+redis-msxwc                     1/1     Running   0          2m49s
+redis-nzfxs                     1/1     Running   0          2m49s
+redis-sentinel-rj2n9            1/1     Running   0          2m49s
+redis-sentinel-wkvvq            1/1     Running   0          2m49s
+redis-v9r5r                     1/1     Running   0          2m50s
+```
+
+
+
 
 ## Running the tests
 
