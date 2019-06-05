@@ -209,6 +209,29 @@ run the NFT's
 mvn gatling:test
 ```
 
+The NFTs will do some setup, 'creating keys' etc, but after they get going you will see some repeating output like this. The global request count should always be increasing...
+
+```
+================================================================================
+2019-06-05 22:19:37                                         165s elapsed
+---- Requests ------------------------------------------------------------------
+> Global                                                   (OK=16426  KO=0     )
+> delete_key                                               (OK=10118  KO=0     )
+> Make Payment                                             (OK=6308   KO=0     )
+
+---- Chaos ---------------------------------------------------------------------
+[--------------------------------------------------------------------------]  0%
+          waiting: 0      / active: 1      / done: 0     
+---- Claim Keys ----------------------------------------------------------------
+[--------------------------------------------------------------------------]  0%
+          waiting: 0      / active: 5      / done: 0     
+================================================================================
+```
+
+Periodically you should see the redis pods cycling when the chaos script kicks in:
+
+
+
 ### Break down into end to end tests
 
 Explain what these tests test and why
