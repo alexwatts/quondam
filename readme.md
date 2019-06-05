@@ -1,6 +1,6 @@
 # Quondam
 
-Quondam is a HA microservice that trys to help with making parts of a business flow happen 'only once' in environments where 'at least once' is an implication of the technical infrastructure (event sourcing with queues).
+Quondam is a HA microservice that provides a interface for making things happen 'only once', for environments where 'at least once' is an implication of the technical infrastructure, for instance where queues are involved.
 
 It's built on top of Redis, Docker and Kubernetes. The REST protocol is serviced by a Spring Boot microservice using Spring MVC.
 
