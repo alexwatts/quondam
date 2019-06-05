@@ -228,9 +228,22 @@ The NFTs will do some setup, 'creating keys' etc, but after they get going you w
 ================================================================================
 ```
 
-Periodically you should see the redis pods cycling when the chaos script kicks in:
+Periodically you should see the redis pods cycling when the chaos script kicks in eg..:
 
+```
+Every 2.0s: kubectl get pods                         I: Wed Jun  5 22:30:13 2019
 
+NAME                            READY   STATUS              RESTARTS   AGE
+bond-web-64fcf46bd9-skfvv       1/1     Running             0          3h19m
+payments-web-8467f5b867-mc5p7   1/1     Running             0          29m
+redis-kc76b                     0/1     ContainerCreating   0          4s
+redis-master                    2/2     Running             0          64m
+redis-msxwc                     1/1     Running             0          63m
+redis-nzfxs                     1/1     Running             0          63m
+redis-sentinel-rj2n9            1/1     Running             0          63m
+redis-sentinel-wkvvq            1/1     Running             0          63m
+redis-v9r5r                     1/1     Terminating         0          63m
+```
 
 ### Break down into end to end tests
 
