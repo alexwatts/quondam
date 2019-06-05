@@ -8,7 +8,7 @@ The performance and resiliency tests are based on Gatling. Quondam is fast and h
 
 ## Getting Started
 
-These instructions will explain how to build Quondam locally, deploy to a local kubernetes cluster (minikube), and run the performance tests locally against a quondiam cluster with 3 instances of redis in Master/Slave/Slave configuration and 3 Redis Sentinels to handle failover. 
+These instructions will explain how to build Quondam locally, deploy to a local kubernetes cluster (minikube), and run the performance tests locally against a quondam cluster with 3 instances of redis in master/slave/slave configuration and 3 Redis Sentinels to handle master re-election and failover. 
 
 ### Prerequisites
 
