@@ -26,14 +26,12 @@ To build quondam, quondam-nft and payments you need minikube to be running. (wha
 
 ```
  eval $(minikube docker-env)
-```
-
-```
-mvn clean install
+ mvn clean install
 ```
 
 You should see the following output:
 
+```
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
 [INFO] 
@@ -44,12 +42,19 @@ You should see the following output:
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
-
+```
 
 To build the redis image 
 
 ```
 ./build-redis-image.sh
+```
+
+You should see lines similar to this:
+
+```
+Successfully built e33e8d456e34
+Successfully tagged k8s.gcr.io/redis:v1
 ```
 
 End with an example of getting some data out of the system or using it for a little demo
