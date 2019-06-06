@@ -137,34 +137,6 @@ redis-v9r5r                     1/1     Running   0          2m50s
 
 The NFT tests are based on gatling to load the quondam web service. There is a shell script (chaos.sh) that is invoked periodically by the load test to randomly destoy redis nodes while the test is running to prove resiliency.
 
-A simply way to observe this while the test is running is to open a 'watch' command on 'kubectl get pods'. You can get watch on mac OS with
-
-```
-brew install watch
-```
-
-in a second terminal window, you can run 
-
-```
-eval $(minikube docker-env)
-watch kubectl get pods
-```
-to get the status of all running pods
-
-```
-Every 2.0s: kubectl get pods                         I: Wed Jun  5 21:51:49 2019
-
-NAME                            READY   STATUS    RESTARTS   AGE
-bond-web-64fcf46bd9-skfvv       1/1     Running   0          161m
-payments-web-8467f5b867-4jz74   1/1     Running   0          159m
-redis-master                    2/2     Running   0          25m
-redis-msxwc                     1/1     Running   0          25m
-redis-nzfxs                     1/1     Running   0          25m
-redis-sentinel-rj2n9            1/1     Running   0          25m
-redis-sentinel-wkvvq            1/1     Running   0          25m
-redis-v9r5r                     1/1     Running   0          25m
-```
-
 Check the service URL for quondam 
 
 ```
@@ -229,6 +201,35 @@ The NFTs will do some setup, 'creating keys' etc, but after they get going you w
 ================================================================================
 ```
 
+A simply way to observe the pods while the test is running is to open a 'watch' command on 'kubectl get pods'. You can get watch on mac OS with
+
+```
+brew install watch
+```
+
+in a second terminal window, you can run 
+
+```
+eval $(minikube docker-env)
+watch kubectl get pods
+```
+to get the status of all running pods
+
+```
+Every 2.0s: kubectl get pods                         I: Wed Jun  5 21:51:49 2019
+
+NAME                            READY   STATUS    RESTARTS   AGE
+bond-web-64fcf46bd9-skfvv       1/1     Running   0          161m
+payments-web-8467f5b867-4jz74   1/1     Running   0          159m
+redis-master                    2/2     Running   0          25m
+redis-msxwc                     1/1     Running   0          25m
+redis-nzfxs                     1/1     Running   0          25m
+redis-sentinel-rj2n9            1/1     Running   0          25m
+redis-sentinel-wkvvq            1/1     Running   0          25m
+redis-v9r5r                     1/1     Running   0          25m
+```
+
+
 Periodically you should see the redis pods cycling when the chaos script kicks in eg..:
 
 ```
@@ -245,32 +246,42 @@ redis-sentinel-rj2n9            1/1     Running             0          63m
 redis-sentinel-wkvvq            1/1     Running             0          63m
 redis-v9r5r                     1/1     Terminating         0          63m
 ```
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+When the tests are finished (10 minutes) You should see some output similar to the below
 
 ```
-Give an example
+================================================================================
+---- Global Information --------------------------------------------------------
+> request count                                      61276 (OK=61260  KO=16    )
+> min response time                                      0 (OK=0      KO=7502  )
+> max response time                                   7573 (OK=6417   KO=7573  )
+> mean response time                                    49 (OK=47     KO=7520  )
+> std deviation                                        215 (OK=178    KO=20    )
+> response time 50th percentile                         13 (OK=13     KO=7514  )
+> response time 75th percentile                         52 (OK=52     KO=7523  )
+> response time 95th percentile                        100 (OK=100    KO=7565  )
+> response time 99th percentile                       1521 (OK=718    KO=7571  )
+> mean requests/sec                                 99.152 (OK=99.126 KO=0.026 )
+---- Response Time Distribution ------------------------------------------------
+> t < 800 ms                                         60649 ( 99%)
+> 800 ms < t < 1200 ms                                   0 (  0%)
+> t > 1200 ms                                          611 (  1%)
+> failed                                                16 (  0%)
+---- Errors --------------------------------------------------------------------
+> status.find.is(200), but actually found 500                        16 (100.0%)
+================================================================================
+
+Reports generated in 3s.
+Please open the following file: /Users/alex/bond/bond-perf-tests/target/gatling/hasimulation-20190606081951143/index.html
+Global: mean of response time is less than 50.0 : true
+delete_key: percentage of failed events is less than 0.05 : true
+Make Payment: percentage of failed events is less than 0.05 : true
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
 ```
 
-### And coding style tests
+The key assertions in the test are that the error request percentage is lower that 0.05% and that the mean response time is less than 50ms.
 
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
 ## Contributing
 
@@ -282,9 +293,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+* **Alex Watts** - *Initial work* - (https://github.com/alexwatts)
 
 ## License
 
@@ -292,7 +301,7 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 
 ## Acknowledgments
 
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+* https://github.com/kubernetes
+* https://spring.io/projects/spring-boot
+* https://github.com/redis
 
