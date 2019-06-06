@@ -1,7 +1,7 @@
 #!/bin/bash
 
-kubectl scale deployment bond-web --replicas 0
+kubectl scale deployment quondam-web --replicas 0
 
-kubectl delete deployment bond-web
+kubectl delete deployment quondam-web
 
-kubectl delete service bond-web
+kubectl delete service quondam-web

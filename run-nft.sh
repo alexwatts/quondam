@@ -1,3 +1,3 @@
 #!/bin/bash
 
-mvn -pl bond-perf-tests gatling:test
+mvn -pl quondam-nft gatling:test

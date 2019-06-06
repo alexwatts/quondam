@@ -3,13 +3,13 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.ajw</groupId>
-  <artifactId>bond-parent</artifactId>
+  <artifactId>quondam-parent</artifactId>
   <version>1.0</version>
   <packaging>pom</packaging>
 
   <modules>
-      <module>bond</module>
-      <module>bond-perf-tests</module>
+      <module>quondam</module>
+      <module>quondam-nft</module>
       <module>payments</module>
   </modules>
 
