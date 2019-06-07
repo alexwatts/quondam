@@ -1,13 +1,11 @@
-package quondam
-
 import com.typesafe.config.ConfigFactory
 import io.gatling.core.Predef._
 import io.gatling.http.Predef._
 import scalaj.http.{Http, HttpOptions, HttpResponse}
 
 import scala.concurrent.duration._
+import scala.sys.process._
 import scala.util.Random
-import sys.process._
 
 class HASimulation extends Simulation {
 
@@ -69,7 +67,7 @@ class HASimulation extends Simulation {
   val chaosScn = scenario("Chaos").
     during(duration) {
       exec(session => {
-        val scriptOutput = Process("./quondam-nft/chaos.sh").!!
+        val scriptOutput = Process("./chaos.sh").!!
         println(s"""Chaos invoked: ${scriptOutput} """)
         session
       }).pause(1 minute)
