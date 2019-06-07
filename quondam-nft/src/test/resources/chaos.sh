@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PODS=$(./get-redis-pods.sh )
+PODS=$(/get-redis-pods.sh)
 
 IFS=' '
 read -ra POD_LIST <<< "$PODS"

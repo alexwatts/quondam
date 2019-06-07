@@ -39,6 +39,12 @@ COPY src/test/resources/* /opt/gatling/user-files/resources/
 
 COPY src/test/scala/* /opt/gatling/user-files/simulations/
 
+COPY  src/test/resources/chaos.sh /
+COPY  src/test/resources/get-redis-pods.sh /
+
+RUN chmod 0777 /chaos.sh
+RUN chmod 0777 /get-redis-pods.sh
+
 # set environment variables
 ENV PATH /opt/gatling/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 ENV GATLING_HOME /opt/gatling

@@ -11,4 +11,9 @@ kubectl create -f redis/redis-sentinel-controller.yaml
 kubectl create -f redis/redis-controller.yaml
 
 kubectl scale rc redis --replicas 3
-kubectl scale rc redis-sentinel --replicas 3 
+kubectl scale rc redis-sentinel --replicas 3
+
+sleep 5s # Waits 5 seconds.
+
+kubectl delete pod redis-master
+
