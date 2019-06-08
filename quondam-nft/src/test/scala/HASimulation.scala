@@ -77,7 +77,7 @@ class HASimulation extends Simulation {
     scn.inject(atOnceUsers(5)).protocols(httpProtocol) ,
     chaosScn.inject(atOnceUsers(1)).protocols(httpProtocol)
   ).assertions(
-    global.responseTime.mean.lt(50), // mean resp time < 50 ms
+    global.responseTime.mean.lt(100), // mean resp time < 50 ms
     forAll.failedRequests.percent.lt(0.05) // for each request, < 5% failure
   )
 
