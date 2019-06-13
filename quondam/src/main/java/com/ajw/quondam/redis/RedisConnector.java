@@ -30,17 +30,21 @@ public class RedisConnector {
                     map.put(key, 1);
                     return new IdempotenceKey(shard, key, Boolean.FALSE);
                 } finally {
-                    lock.unlock();
+                    if (lock.isHeldByCurrentThread()) {
+                        lock.unlock();
+                    }
+
                 }
             }
         } catch (InterruptedException e) {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
         } finally {
-            if (lock != null && lock.isLocked()) {
+            if (lock != null && lock.isHeldByCurrentThread()) {
                 lock.unlock();
             }
         }
-
         throw new IllegalStateException(String.format("Lock was not acquired for shard:%s, key:%s", shard, key));
     }
 
@@ -60,14 +64,18 @@ public class RedisConnector {
                         return new IdempotenceKey(shard, key, Boolean.FALSE);
                     }
                 } finally {
-                    lock.unlock();
+                    if (lock.isHeldByCurrentThread()) {
+                        lock.unlock();
+                    }
                 }
             }
         } catch (InterruptedException ignored) {
-            lock.unlock();
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
             return new IdempotenceKey(shard, key, Boolean.FALSE);
         } finally {
-            if (lock != null && lock.isLocked()) {
+            if (lock != null && lock.isHeldByCurrentThread()) {
                 lock.unlock();
             }
         }
