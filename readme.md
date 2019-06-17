@@ -283,17 +283,9 @@ Make Payment: percentage of failed events is less than 0.05 : true
 The key assertions in the test are that the error request percentage is lower that 0.05% and that the mean response time is less than 50ms.
 
 
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
 ## Authors
 
-* **Alex Watts** - *Initial work* - (https://github.com/alexwatts)
+* **Alex Watts** - (https://github.com/alexwatts)
 
 ## License
 
