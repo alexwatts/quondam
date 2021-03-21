@@ -6,7 +6,7 @@ It's built on top of Redis, Docker and Kubernetes. The REST protocol is serviced
 
 The performance and resiliency tests are based on Gatling. 
 
-Quondam is fast and highly available, although it's not tranactional, and cannot guarantee exactly once
+Quondam is fast and highly available, although it's not transactional, and cannot guarantee exactly once
 
 ## Getting Started
 
