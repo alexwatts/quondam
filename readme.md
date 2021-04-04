@@ -6,7 +6,7 @@ It's built on top of Redis, Docker and Kubernetes. The REST protocol is serviced
 
 The performance and resiliency tests are based on Gatling. 
 
-Quondam is fast and highly available, although it's not transactional, and cannot guarantee exactly once
+Quondam is fast and highly available.
 
 ## Getting Started
 
@@ -40,7 +40,7 @@ You should see the following output:
 [INFO] quondam ............................................ SUCCESS [ 45.352 s]
 [INFO] quondam-nft......................................... SUCCESS [  1.568 s]
 [INFO] payments ........................................... SUCCESS [ 17.262 s]
-[INFO] bond-parent ........................................ SUCCESS [  0.009 s]
+[INFO] quondam-parent ..................................... SUCCESS [  0.009 s]
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD SUCCESS
 [INFO] ------------------------------------------------------------------------
